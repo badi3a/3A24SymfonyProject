@@ -10,14 +10,20 @@ class HomeController extends AbstractController
 {
     #[Route('/contact', name: 'app_contact')]
     public function contact(): Response
-    {
-        return $this->render('contact.html.twig');
+    {   $name="Aziz";
+        $email= "aziz@gmail.com";
+        return $this->render('home/contact.html.twig',
+        array(
+            'name' => $name,
+            'email' => $email
+        )
+        );
     }
 
     #[Route('/home', name: 'app_home')]
     public function index(): Response
     {
-        return $this->render('home.html.twig');
+        return $this->render('home/home.html.twig');
     }
 
 

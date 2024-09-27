@@ -1,6 +1,8 @@
 <html>
 <head></head>
 <body>
+{% if authors is defined and authors is not empty %}
+    {% set total_books=0 %}
     <table>
         <tr>
             <th>id</th>
@@ -9,11 +11,18 @@
             <th>picture</th>
         </tr>
         <tr {% for author in authors %}>
+            {% set total_books=total_books+ author.nbrBooks %}
             <td>{{ author.id }}</td>
-            <td>{{ author.authorName }}</td>
+            <td>{{ author.authorName|upper }}</td>
             <td>{{ author.nbrBooks }}</td>
             <td>{{ author.picture }}</td>
         </tr {% endfor %}>
     </table>
+    <h1>this table contains {{ authors|length }}
+        authors and {{ total_books }} books</h1>
+
+{% else %}
+   <h1>The table is not defined or empty</h1>
+{% endif %}
 </body>
 </html>

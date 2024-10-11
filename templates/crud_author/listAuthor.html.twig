@@ -1,0 +1,13 @@
+<html>
+    <head></head>
+    <body>
+    <h1>Table of authors</h1>
+    <table>
+        <tr><th>id</th><th>name</th></tr>
+        <tr {% for author in authors %}>
+            <td>{{ author.id }}</td>
+            <td>{{ author.name }}</td>
+        </tr{% endfor %}>
+    </table>
+    </body>
+</html>

@@ -15,7 +15,8 @@
             <td>{{ author.id }}</td>
             <td>{{ author.authorName|upper }}</td>
             <td>{{ author.nbrBooks }}</td>
-            <td>{{ author.picture }}</td>
+            <td><img src="{{ asset(author.picture) }}"></td>
+            <td><a href="{{ path("app_author",{'id':author.id}) }}">showAuthor</a></td>
         </tr {% endfor %}>
     </table>
     <h1>this table contains {{ authors|length }}

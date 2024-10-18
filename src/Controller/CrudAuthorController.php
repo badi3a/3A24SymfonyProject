@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Author;
+use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,10 +21,10 @@ class CrudAuthorController extends AbstractController
         ['authors'=>$authors]);
     }
     //search authors by Name
-    #[Route('/search/{name}', name:'app_search_author')]
+    #[Route('/search', name:'app_search_author')]
     public function searchByName(Request $request, AuthorRepository $repository):Response
     {
-        $name= $request->get('name');
+        $name= $request->query->get('name');
         //fetch the authors from the daba base by name
         $authors=$repository->findByName($name);
        //test de code: var_dump($authors); die();
@@ -74,5 +75,20 @@ class CrudAuthorController extends AbstractController
         $author->setEmail('updated email');
         $em->flush();
         return $this->redirectToRoute("app_crud_author");
+    }
+     //method to add a new author with a form submitted by the user
+    #[Route("/insertForm",name:"app_insertForm_author")]
+    public function insertFormAuthor(Request $request, ManagerRegistry $doctrine):Response
+    {   $author= new Author();
+        $form= $this->createForm(AuthorType::class,$author);
+         $form=$form->handleRequest($request);
+         if($form->isSubmitted() && $form->isValid()){
+             $em=$doctrine->getManager();
+             $em->persist($author);
+             $em->flush();
+             return $this->redirectToRoute("app_crud_author");
+         }
+        return $this->render('crud_author/formAuthor.html.twig',
+        ['form'=>$form->createView()]);
     }
 }

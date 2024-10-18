@@ -2,6 +2,10 @@
     <head></head>
     <body>
     <h1>Table of authors</h1>
+    <form method="get" action="{{ path("app_search_author") }}">
+        <input type="text" name="name" placeholder="search by name">
+        <input type="submit" value="search">
+    </form>
     <table>
         <tr><th>id</th><th>name</th><th>email</th></tr>
         <tr {% for author in authors %}>

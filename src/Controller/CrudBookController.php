@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Form\BookType;
+use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,6 +37,19 @@ class CrudBookController extends AbstractController
         }
         return $this->render('crud_book/form.html.twig',
             ['form'=>$form->createView(), 'message'=>$message]);
+    }
+    //afficher liste livre
+    #[Route('/list', name: 'app_crud_book')]
+    public function showBooks(BookRepository $rep): Response
+    {
+        $books=$rep->findAll();
+        return $this->render('crud_book/showBooks.html.twig',['books' => $books]);
+    }
+    #[Route('/search/', name: 'app_search_book')]
+    public function searchBook(BookRepository $rep,Request $request,AuthorRepository $authorRepository): Response
+    {
+        $authorName=$request->query->get("name");
+
     }
 
 }
